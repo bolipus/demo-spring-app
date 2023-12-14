@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+
 
 import { HeaderComponent } from './main/header/header.component';
 
@@ -23,6 +25,7 @@ import { HomeComponent } from './main/home/home.component';
     AppRoutingModule,
     ButtonModule,
     TableModule,
+    TabViewModule,
     BrowserAnimationsModule
   ],
   providers: [],

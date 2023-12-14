@@ -2,7 +2,10 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-
 #container {
   margin: 0 auto;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  text-decoration: none;
 }
