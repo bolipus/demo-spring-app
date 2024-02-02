@@ -17,7 +17,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, ServletException, IOException {
         log.info("onAuthenticationSuccess");
-        log.info(request.getRequestURI());
-        super.onAuthenticationSuccess(request, response, authentication);
+        String targetUrl = request.getRequestURI();
+        log.info(targetUrl);
+
+        //super.onAuthenticationSuccess(request, response, authentication);
+
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
+
 }
