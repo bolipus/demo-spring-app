@@ -1,5 +1,6 @@
 package si.gemma.demo.security;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,15 +17,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Log4j2
 public class LoginFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken("EIKS_USER_TEST", "");
+                new UsernamePasswordAuthenticationToken("test", "");
 
         SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        log.info("LoginFilter");
+        log.info(request.getRequestURI());
 
 
         filterChain.doFilter(request, response);

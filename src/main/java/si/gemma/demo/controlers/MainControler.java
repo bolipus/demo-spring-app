@@ -25,8 +25,6 @@ import java.io.IOException;
 @Log4j2
 public class MainControler {
 
-    @Autowired
-    private AuthenticationManager authManager;
 
     @GetMapping("/")
     public String home(HttpServletRequest request, HttpServletResponse response) {
@@ -40,19 +38,23 @@ public class MainControler {
         return "hello";
     }
 
-   /* @GetMapping("/login")
+   @GetMapping("/signin")
     public void login(HttpServletRequest request, HttpServletResponse response) {
         log.info("login");
-        log.info(request.getRequestURI());
+
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            log.info("already authenticated");
+            return;
+        }
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken("test", "test");
 
         SecurityContextHolder.getContext()
                 .setAuthentication(authToken);
-    }*/
+    }
 
-    @PostMapping("/login")
+   /* @PostMapping("/login")
     public void login(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
@@ -61,9 +63,7 @@ public class MainControler {
 
         Authentication authentication = authManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-
-    }
+    }*/
 
 
 
