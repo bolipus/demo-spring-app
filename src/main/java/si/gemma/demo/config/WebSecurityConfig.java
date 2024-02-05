@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import si.gemma.demo.security.CustomAuthenticationProvider;
 import si.gemma.demo.security.LoginFilter;
@@ -19,9 +21,7 @@ import si.gemma.demo.security.LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.DEFAULT_FILTER_ORDER)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig  {
 
     private final LoginSuccessHandler loginSuccessHandler;
 
@@ -44,38 +44,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationManagerBuilder.build();
     }
 
-   /* @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }*/
-
-
-
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/signin").permitAll()
-                .antMatchers("/error").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .httpBasic()
-                .and()
-                .logout()
-                .permitAll()
-                .and().csrf().disable()
-                .cors()
-                .and()
+                .authorizeRequests((authz) -> {
+                    authz
+                            .antMatchers("/").permitAll()
+                            .antMatchers("/signin").permitAll()
+                            .antMatchers("/error").permitAll()
+                            .antMatchers("/api/public").permitAll()
+                            .antMatchers("/api/secure").authenticated()
+                            .anyRequest().permitAll();
+                })
+                .httpBasic(Customizer.withDefaults())
+                .logout(Customizer.withDefaults())
+                .csrf(httpSecurityCsrfConfigurer -> {
+                    httpSecurityCsrfConfigurer.disable();
+                })
+                .cors(Customizer.withDefaults())
                 .securityContext((context) -> context
-                        .requireExplicitSave(true)
+                .requireExplicitSave(true)
                 ).sessionManagement((session) -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
-
+        return http.build();
     }
+
+
+
 }
