@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from "primeng/api";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,9 @@ import {PrimeNGConfig} from "primeng/api";
 export class AppComponent implements OnInit{
   title = 'Bogdan';
 
-  constructor(private primengConfig: PrimeNGConfig) {
-
+  constructor(private primengConfig: PrimeNGConfig,
+              private userService: UserService) {
+    this.primengConfig.ripple = true;
   }
 
 
@@ -22,5 +24,9 @@ export class AppComponent implements OnInit{
       menu: 1000,     // overlay menus
       tooltip: 1100   // tooltip
     };
+
+   this.userService.getUser().subscribe(data => {
+     console.log(data);
+   })
   }
 }
