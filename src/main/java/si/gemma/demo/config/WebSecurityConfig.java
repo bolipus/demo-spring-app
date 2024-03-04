@@ -53,6 +53,8 @@ public class WebSecurityConfig  {
                     authz
                             .antMatchers("/").permitAll()
                             .antMatchers("/signin").permitAll()
+                            .antMatchers("/login").permitAll()
+                            .antMatchers("/signout").permitAll()
                             .antMatchers("/error").permitAll()
                             .antMatchers("/api/public").permitAll()
                             .antMatchers("/api/secure").authenticated()

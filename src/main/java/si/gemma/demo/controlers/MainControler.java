@@ -12,14 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 @Controller
 @Log4j2
@@ -38,8 +36,33 @@ public class MainControler {
         return "hello";
     }
 
+    @GetMapping("/login")
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        log.info("login");
+        log.info("sicas_cert " + request.getHeader("sicas_cert"));
+        log.info("certificate" + request.getHeader("certificate"));
+        log.info(request.getHeader("host"));
+
+
+        Enumeration<String> headerNames = request.getHeaderNames();
+
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            log.info(headerName+ ": " + headerValue);
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/signout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        log.info("signout");
+        return "logout";
+    }
+
    @GetMapping("/signin")
-    public void login(HttpServletRequest request, HttpServletResponse response) {
+    public void signin(HttpServletRequest request, HttpServletResponse response) {
         log.info("login");
 
         if (SecurityContextHolder.getContext().getAuthentication() != null) {

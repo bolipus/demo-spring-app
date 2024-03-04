@@ -23,13 +23,17 @@ public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken("test", "");
+        if (!request.getRequestURI().contains("/logout") || !request.getRequestURI().contains("/signout")){
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken("test", "");
 
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+            SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        log.info("LoginFilter");
-        log.info(request.getRequestURI());
+            log.info("LoginFilter");
+            log.info(request.getRequestURI());
+        }
+
+
 
 
         filterChain.doFilter(request, response);

@@ -1,9 +1,20 @@
 version: '3'
 services:
-
-  spring:
+  backend:
+    image: demo
+    container_name: demo
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "9000:8080"
+  frontend:
+    image: demo-angular
+    container_name: demo-angular
+    build:
+      context: ./src/webapp/
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    depends_on:
+      - backend
