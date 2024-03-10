@@ -1,10 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from "primeng/api";
 import {UserService} from "./services/user.service";
+import {HeaderComponent} from "./main/header/header.component";
+import {HomeComponent} from "./main/home/home.component";
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
+  imports: [
+    HeaderComponent,
+    HomeComponent
+  ],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
@@ -25,8 +32,17 @@ export class AppComponent implements OnInit{
       tooltip: 1100   // tooltip
     };
 
-   this.userService.getUser().subscribe(data => {
-     console.log(data);
-   })
+
+    this.userService.getUser().subscribe({
+      next: user => {
+       console.log("User:"+user);
+      },
+      error: error => {
+        console.log(error);
+      }, complete: () => {
+        console.log("User retrieved");
+      }
+
+    });
   }
 }

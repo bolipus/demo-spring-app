@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
+       /* registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver()
@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
                         return (requestedResource.exists() && requestedResource.isReadable()) ? requestedResource
                                 : new ClassPathResource("/static/index.html");
                     }
-                });
+                });*/
 
     }
 
