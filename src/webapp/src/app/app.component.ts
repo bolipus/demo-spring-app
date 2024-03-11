@@ -3,6 +3,7 @@ import {PrimeNGConfig} from "primeng/api";
 import {UserService} from "./services/user.service";
 import {HeaderComponent} from "./main/header/header.component";
 import {HomeComponent} from "./main/home/home.component";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {HomeComponent} from "./main/home/home.component";
   templateUrl: './app.component.html',
   imports: [
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    RouterOutlet
   ],
   styleUrls: ['./app.component.css']
 })

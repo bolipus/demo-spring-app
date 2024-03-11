@@ -2,13 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
 import {JsonPipe} from "@angular/common";
+import {RouterLink, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   imports: [
-    JsonPipe
+    JsonPipe,
+    RouterLink,
+    RouterOutlet
   ],
   styleUrl: './home.component.css'
 })

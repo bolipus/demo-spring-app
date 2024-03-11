@@ -1,6 +1,25 @@
 <div class="container">
-  
+
  User: {{user | json}}
+
+  <a class="nav-link" [routerLink] = "['./home']">
+    Home
+  </a>
+
+  <a class="nav-link" [routerLink] = "['./cars']">
+    Cars
+  </a>
+
+  <a class="nav-link" [routerLink] = "['./cars/2']" >
+    Cars parts
+  </a>
+
+  <a class="nav-link" [routerLink] = "['./cars/details/2']" >
+    Cars parts details
+  </a>
+
+
+
 
   <a href="./signout" > Logout </a>
 </div>

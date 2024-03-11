@@ -28,13 +28,13 @@ public class WebSecurityConfig  {
 
     private final CustomAuthenticationProvider authProvider;
 
-    private final LoginFilter loginFilter;
+   // private final LoginFilter loginFilter;
 
     @Autowired
-    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, CustomAuthenticationProvider authProvider, LoginFilter loginFilter) {
+    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, CustomAuthenticationProvider authProvider) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.authProvider = authProvider;
-        this.loginFilter = loginFilter;
+      //  this.loginFilter = loginFilter;
     }
 
     @Bean
@@ -48,7 +48,7 @@ public class WebSecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+               // .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests((authz) -> {
                     authz
                             .antMatchers("/").permitAll()

@@ -24,11 +24,21 @@ import java.util.Enumeration;
 public class MainControler {
 
 
-    @GetMapping("/")
-    public String home(HttpServletRequest request, HttpServletResponse response) {
-        log.info("index");
-        return "index";
-    }
+
+    @GetMapping(value = {
+            "/",
+            "/cars/**",
+            "/{x:[\\w\\-]+}",
+            "/{x:[\\w\\-]+}/{id:.+}"
+     }
+    )
+   public String home(HttpServletRequest request, HttpServletResponse response,
+                      @PathVariable(value = "x", required = false) String x,
+                      @PathVariable(value = "id", required = false) String id) {
+       log.info("index");
+       return "/index.html";
+   }
+
 
     @GetMapping("/hello")
     public String hello(HttpServletRequest request, HttpServletResponse response) {
@@ -52,7 +62,7 @@ public class MainControler {
             log.info(headerName+ ": " + headerValue);
         }
 
-        return "redirect:/";
+        return "/index.html";
     }
 
     @GetMapping("/signout")
