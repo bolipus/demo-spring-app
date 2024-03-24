@@ -1,25 +1,11 @@
 <div class="container">
 
- User: {{user | json}}
+  <div class="row m-4">
+    User: {{user | json}}
+  </div>
 
-  <a class="nav-link" [routerLink] = "['./home']">
-    Home
-  </a>
+  <div class="row">
+    <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
+  </div>
 
-  <a class="nav-link" [routerLink] = "['./cars']">
-    Cars
-  </a>
-
-  <a class="nav-link" [routerLink] = "['./cars/2']" >
-    Cars parts
-  </a>
-
-  <a class="nav-link" [routerLink] = "['./cars/details/2']" >
-    Cars parts details
-  </a>
-
-
-
-
-  <a href="./signout" > Logout </a>
 </div>

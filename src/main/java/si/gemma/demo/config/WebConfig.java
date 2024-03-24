@@ -15,10 +15,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-       /* registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/")
-                .resourceChain(true)
-                .addResolver(new PathResourceResolver()
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("classpath:/static/assets/");
+
+       registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
+
+               /* .addResolver(new PathResourceResolver()
                 {
                     @Override
                     protected Resource getResource(String resourcePath, Resource location) throws IOException {

@@ -26,11 +26,8 @@ public class MainControler {
 
 
     @GetMapping(value = {
-            "/",
-            "/cars/**",
-            "/{x:[\\w\\-]+}",
-            "/{x:[\\w\\-]+}/{id:.+}"
-     }
+            "/"
+        }
     )
    public String home(HttpServletRequest request, HttpServletResponse response,
                       @PathVariable(value = "x", required = false) String x,

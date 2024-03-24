@@ -3,6 +3,8 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
 import {JsonPipe} from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,9 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   imports: [
     JsonPipe,
     RouterLink,
-    RouterOutlet
+    RouterOutlet,
+    CalendarModule,
+    FormsModule
   ],
   styleUrl: './home.component.css'
 })
@@ -20,6 +24,7 @@ export class HomeComponent implements OnInit{
   rounded : boolean = true;
 
   user!: User;
+  date = new Date();
 
 
   constructor(private userService: UserService) {
@@ -28,7 +33,7 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
 
-      this.userService.getUser().subscribe({
+     /* this.userService.getUser().subscribe({
         next: user => {
           this.user = user;
           console.log("User:"+ this.user);
@@ -39,6 +44,6 @@ export class HomeComponent implements OnInit{
           console.log("User retrieved");
         }
 
-      });
+      });-*/
   }
 }

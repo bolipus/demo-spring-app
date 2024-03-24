@@ -51,7 +51,8 @@ public class WebSecurityConfig  {
                // .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests((authz) -> {
                     authz
-                            .antMatchers("/").permitAll()
+                            .antMatchers("/**").permitAll()
+                            .antMatchers("/assets/**").permitAll()
                             .antMatchers("/signin").permitAll()
                             .antMatchers("/login").permitAll()
                             .antMatchers("/signout").permitAll()

@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {PrimeNGConfig} from "primeng/api";
+import {MenuItem, PrimeNGConfig} from "primeng/api";
 import {UserService} from "./services/user.service";
 import {HeaderComponent} from "./main/header/header.component";
 import {HomeComponent} from "./main/home/home.component";
-import {RouterOutlet} from "@angular/router";
+import {ChildrenOutletContexts, RouterOutlet} from "@angular/router";
+import {TabMenuModule} from "primeng/tabmenu";
+import { AnimationEvent } from '@angular/animations';
+import {routerTransition} from "./utils/router-transition";
 
 @Component({
   selector: 'app-root',
@@ -12,20 +15,50 @@ import {RouterOutlet} from "@angular/router";
   imports: [
     HeaderComponent,
     HomeComponent,
-    RouterOutlet
+    RouterOutlet,
+    TabMenuModule,
   ],
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    routerTransition
+  ]
 })
 export class AppComponent implements OnInit{
+
+  items: MenuItem[] | undefined;
+
+  activeItem: MenuItem | undefined;
+
   title = 'Bogdan';
 
   constructor(private primengConfig: PrimeNGConfig,
-              private userService: UserService) {
+              private userService: UserService,
+              private contexts: ChildrenOutletContexts) {
     this.primengConfig.ripple = true;
+  }
+
+  onAnimationStart(event: AnimationEvent) {
+    if (event.phaseName === 'start') {
+      console.log('Route change animation started');
+    }
+  }
+
+  onAnimationDone(event: AnimationEvent) {
+    if (event.phaseName === 'done') {
+      console.log('Route change animation stopped');
+    }
   }
 
 
   ngOnInit(): void {
+    this.items = [
+      { label: 'Home', icon: 'pi pi-fw pi-home' , routerLink: './home'},
+      { label: 'Cars', icon: 'pi pi-fw pi-calendar' , routerLink: './cars'},
+    ];
+
+    this.activeItem = this.items[0];
+
+
     this.primengConfig.ripple = true;
     this.primengConfig.zIndex = {
       modal: 1100,    // dialog, sidebar
@@ -35,7 +68,7 @@ export class AppComponent implements OnInit{
     };
 
 
-    this.userService.getUser().subscribe({
+   /* this.userService.getUser().subscribe({
       next: user => {
        console.log("User:"+user);
       },
@@ -45,6 +78,12 @@ export class AppComponent implements OnInit{
         console.log("User retrieved");
       }
 
-    });
+    });*/
+  }
+
+
+  getState(outlet:any) {
+    // Changing the activatedRouteData.state triggers the animation
+    return outlet.activatedRouteData.state;
   }
 }
